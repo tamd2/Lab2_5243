@@ -1,0 +1,18 @@
+Taumer Anabtawi
+Lab 1
+CSE 5243
+Fuhry WF 12:45
+
+HOW TO RUN
+Simply run the command "python lab0.py"
+
+NOTES:
+-In the documents, words in all capital letters are class labels (found from topics/places tags). All lower case words are normal words found from the body of the documents
+
+-I do not have a copy of the .sgm Reuters files. Instead, I use a Python library to directly link to the webpages containing the documents and scrape information from there. Thus, an internet connection is required to run my script.
+
+-Page 12 or 13 contains a run-time error when calculating Standard Deviation due to a divide by 0 error. It does not effect the results and the program should not crash. It will just output a run-time error to the console.
+
+-The Makefile contains only a make clean command to delete the text files in order to produce fresh results each time. The documents will appear in the same directory where the script is run.
+
+-Python libraries are referenced using a $PYTHONPATH env variable as described in the FAQ. The script heavily relies on these libraries (BeautfiulSoup, Numpy)
