@@ -4,6 +4,7 @@ from lxml import html
 import urllib2
 import math
 import numpy
+import pickle
 
 #list of stop words
 #found here: http://xpo6.com/list-of-english-stop-words/
@@ -232,6 +233,17 @@ def avg_tf(dict_of_words):
 	else:
 		avg = 0
 	return avg
+
+
+def read_in_preprocessed():
+	dat_file_freq = open("freq_dat","r")
+	count_feature_vector = pickle.load(dat_file_freq)
+	dat_file_freq.close()
+
+	dat_file_pres = open("pres_dat","r")
+	presence_feature_vector = pickle.load(dat_file_pres)
+	dat_file_pres.close()
+
 
 
 #want to loop through each segment
