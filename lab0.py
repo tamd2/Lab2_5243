@@ -168,7 +168,7 @@ def process_word_freq():
 #creates vector with frequency of each word in the document where it was found
 def process_freq():
 	for list_id in range(0,num_documents):
-		print "Processing List %d" % (list_id)
+		print("Processing List " + str(list_id))
 		for word in document_word_lists[list_id]:
 			occurrences = document_word_lists[list_id].count(word)
 			count_feature_vector[list_id][word] = occurrences
@@ -245,7 +245,7 @@ places_counter = 0
 
 #loop through url index 0 - 21
 for current_page in range(0,num_pages):
-	print "Scanning Page %d of 22" % (current_page + 1)
+	print("Scanning Page" + str(current_page + 1) +" of 22")
 	number = '000'
 	if current_page < 10:
 		number = '00' + str(current_page)
@@ -265,25 +265,24 @@ for current_page in range(0,num_pages):
 
 	#print len(contents)
 	for body in contents:	    
-		#grab list of words from body tag
-		words = split_words(body.text) #split words from each individual body
-		words = make_lower_case(words) #make all words lowercase
-	   	words = filter_out_words(words) #filter out stop words
-		words = remove_numbers(words) #remove numbers from word list	
-		words = get_word_stems(words) #create list of words by stem only
+            words = split_words(body.text) #split words from individual body
+            words = make_lower_case(words)      #make all words lowercase
+            words = filter_out_words(words)     #filter out stop words
+            words = remove_numbers(words)       #remove numbers from word list	
+            words = get_word_stems(words)       #create list of words by stem only
 	    	
-		#filter words by term frequency
-		tf_dictionary = tf_dict(words) #returns dictionary list with value as tf
-		#if a word has a term frequency is in above the average + 1std, keep it
-		words = filter_by_tf(words, tf_dictionary)
-		tf_dictionary.clear() #delete dictionary to save memory, no longer needed
+		    #filter words by term frequency
+            tf_dictionary = tf_dict(words) #returns dictionary list with value as tf
+		    #if a word has a term frequency is in above the average + 1std, keep it
+            words = filter_by_tf(words, tf_dictionary)
+            tf_dictionary.clear() #delete dictionary to save memory, no longer needed
 
-		master_word_list.extend(words) #add these words to the master word
+            master_word_list.extend(words) #add these words to the master word
 	
-		#store word list for each document in its own list
-		document_word_lists[document_number] = words #set words as the dictionary for this row (document)
+		    #store word list for each document in its own list
+            document_word_lists[document_number] = words #set words as the dictionary for this row (document)
 
-		document_number = document_number + 1 #doc has been processed, increment
+            document_number = document_number + 1 #doc has been processed, increment
 
 	#process class labels as TOPICS and PLACES tags
 	#each doc has topics and places tags even if empty, so counters match up
@@ -341,11 +340,11 @@ master_word_list = list(set(master_word_list))
 			#add to relevant words list
 #			relevant_word_list.extend(word)
 
-print "Number of releveant words sifted out %d" % (len(master_word_list))
+print("Number of releveant words sifted out "+ str(len(master_word_list)))
 
 #after have entire word list from all docs, go in and process each seperate doc list			
 #process_word_freq()
-print "Processing feature vectors"
+print("Processing feature vectors")
 process_freq()
 
 
