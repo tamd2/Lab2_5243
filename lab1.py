@@ -41,9 +41,11 @@ def read_in_preprocessed():
 	dat_file_pres = open("pres_dat","r")
 	presence_feature_vector = pickle.load(dat_file_pres)
 	dat_file_pres.close()
-		
+
 
 #main goes here	
-
+print("Reading in feature vectors from pre-processing...")
+read_in_preprocessed()
+print("Reading in complete")
 
 
