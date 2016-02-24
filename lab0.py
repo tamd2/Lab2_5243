@@ -235,8 +235,8 @@ def avg_tf(dict_of_words):
 	return avg
 
 def print_preprocessed_dat_files(num_in_dat_file):
-	count_feature_dat = count_feature_vector[0:num_in_dat_file-1]
-	pres_feature_dat = presence_feature_vector[0:num_in_dat_file-1]
+	count_feature_dat = count_feature_vector[0:num_in_dat_file]
+	pres_feature_dat = presence_feature_vector[0:num_in_dat_file]
 
 	dat_file_freq = open("freq_dat","wb")
 	pickle.dump(count_feature_dat,dat_file_freq)
