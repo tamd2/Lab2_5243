@@ -54,9 +54,9 @@ def OverallEntropy(clusterLabels, featureVectors, numClusters):
     return overallEntropy
 
 def clusterEntropy(subFeatureVectorList, clusterIndex):
-    print("Cluster topic labels:")
-    print(str(subFeatureVectorList))
-    print("")
+    #print("Cluster topic labels:")
+    #print(str(subFeatureVectorList))
+    #print("")
 
     wordFrequency = dict()
     numWords = 0
@@ -77,6 +77,39 @@ def clusterEntropy(subFeatureVectorList, clusterIndex):
             entropy += freq * math.log(freq, 2)
 
     return -entropy
+
+def calculateSkew(clusterLabels, numClusters):
+    countList = dict()
+    for clusterIndex in clusterLabels:
+        clusterLabel = clusterLabels[clusterIndex]
+        if clusterLabel in countList:
+            countList[clusterLabel] += 1
+        else:
+            countList[clusterLabel] = 1
+
+    #calculate avg number of points per cluster
+    runningAvg = 0
+    numClusters = 0
+    for index in countList:
+        runningAvg += countList[index]
+        numClusters += 1
+    avgPointsPerCluster = 1.0 * runningAvg / numClusters
+
+    #calculate standard deviation
+    variance = 0
+    for index in countList:
+        variance += pow((countList[index] - avgPointsPerCluster),2)
+    variance = 1.0 * variance / numClusters
+    stdev = pow(variance, .5)
+
+    #calculate skew
+    skew = 0
+    for index in countList:
+        count = countList[index]
+        skew += pow((count - avgPointsPerCluster), 3)
+    skew = 1.0 * skew / ((numClusters-1) * pow(stdev, 3))
+
+    return skew
 
 def read_in_preprocessed(fileName):
     dat_file_freq = open(fileName,"r")
@@ -208,3 +241,6 @@ for i in range(len(featureVectors)):
 
 print("Entropy:")
 print(str(OverallEntropy(clusterLabels, topicLabelFeatureVectors, currentClusterLabel+1)))
+
+print("Skew:")
+print(str(calculateSkew(clusterLabels, currentClusterLabel+1)))
