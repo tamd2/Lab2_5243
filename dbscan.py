@@ -155,9 +155,6 @@ minPoints = int(sys.argv[2])
 inputFileName = str(sys.argv[3])
 featureVectors = read_in_preprocessed(inputFileName)
 
-#for i in range(len(featureVectors)):
-#    print(str(featureVectors[i]))
-
 print("creating proximity matrix")
 
 #Create a proximity matrix, fill it up
@@ -244,3 +241,6 @@ print(str(OverallEntropy(clusterLabels, topicLabelFeatureVectors, currentCluster
 
 print("Skew:")
 print(str(calculateSkew(clusterLabels, currentClusterLabel+1)))
+
+print("Number of Clusters:")
+print(str(currentClusterLabel+1))

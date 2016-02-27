@@ -1,0 +1,37 @@
+Tim Taylor and Taumer Anabtawi
+cse5243, Lab 2
+
+What is implemented:
+    for this lab, we have implemented K-Means and dbscan for our clustering algorithms. For our two distance metrics, we chose to
+implement Manhattan distance and Euclidian distance
+
+
+Underlying assumptions:
+    for K-Means:
+
+    for dbscan:
+        1) If a point is equal to epsilon in distance away, it is counted as a neighbor
+        2) A point cannot be its own neighbor
+       
+    for measuring clustering quality:
+        1) for entropy, I used log base 2 as this class recommends
+ 
+
+How to use this project:
+    There are two python script files for this project, one for K-Means, and one for dbscan. Each has a README file that will
+explain how to run the file including how to change the parameters for K, epsilon, input data, etc.
+
+
+Scalability:
+    for K-Means:
+
+
+    for dbscan:
+
+
+Quality of clustering:
+    for K-Means:
+
+
+    for dbscan:
+
