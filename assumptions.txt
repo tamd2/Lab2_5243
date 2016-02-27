@@ -2,3 +2,4 @@ for epsilon, if a point is equal to epsilon, it is counted as a neighbor
 for dbscan, a point cannot be its own neighbor
 
 for entropy, I used log base 2
+for all input feature vectors, we used the frequency vector type. 

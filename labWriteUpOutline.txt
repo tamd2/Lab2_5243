@@ -1,0 +1,68 @@
+Tim Taylor and Taumer Anabtawi
+cse5243, Lab 2
+
+What is implemented:
+    for this lab, we have implemented K-Means and dbscan for our clustering algorithms. For our two distance metrics, we chose to
+implement Manhattan distance and Euclidian distance.
+
+    Tim Taylor created the code for dbscan, and the code for calculating Manhattan distance, entropy, and skew.
+    
+    Taumer Anabtawi created the code for K-Means and the code for calculating Euclidian distance. He also adapted his previous lab to 
+        output its feature vectors in a manner that could easily be read by this lab.
+
+    our projects run from input files that are generated from the previous lab. As such, the run time for our project does not depend
+at all on the run time of the previous lab. You do not need to run the previous lab to get these input files as we have provided several for you. See the readmes for the two scripts for further explanation
+
+
+Underlying assumptions:
+    for K-Means:
+
+    for dbscan:
+        1) If a point is equal to epsilon in distance away, it is counted as a neighbor
+        2) A point cannot be its own neighbor
+       
+    for measuring clustering quality:
+        1) for entropy, I used log base 2 as this class recommends
+ 
+
+How to use this project:
+    There are two python script files for this project, one for K-Means, and one for dbscan. Each has a README file that will
+explain how to run the file including how to change the parameters for K, epsilon, input data, etc.
+
+
+Scalability:
+    for K-Means:
+
+
+    for dbscan:
+        You can see below for a graph that shows how fast dbscan ran for a given amount of files to process. When the amount of files
+    to process doubled (from 5,000 to 10,000) the run time increased by a factor of 4 (5 minutes to 20 minutes). Similarly, when the 
+    amount of files to process tripled (from 5,000 to 15,000) the runtime took about 9 times longer (5 minutes to ~45 minutes). This
+    suggests that we have a polynomial scale for runtime of n^2. This scale is decent. It isn't great, but it isn't exponential 
+    which makes it managable.
+        
+    <include pictures for documents vs time>
+
+    <discuss if manhattan vs euclidian affected time taken>
+
+Quality of clustering:
+    For measuring quality, our group chose to use entropy and skew as the primary measures. Lower entropy means better clusters and
+lower skew means that the clusters are all similarly sized.
+
+    for K-Means:
+
+
+    for dbscan:
+        The quality of the clustering was highly dependent on both epsilon and minPoints. To better get a conclusion on how quality
+    this clustering can be, I spent some time varying these parameters on a smaller data set in order to find the values that would
+    give optimal clustering in the full set. Below are several charts showing the resulting epsilon and skew vs minPoints and epsilon
+        
+        We found that, in order to get both lower skew and lower entropy, you needed minPoints and epsilon to both be values higher
+    than 20. After that point, you still make lower skew and entropy by increasing both minPoints and epsilon, but there are some
+    diminishing returns. Also, by increasing both epsilon and minPoints, you lower the amount of clusters at the end, so you need to 
+    balance what you want in terms of number of clusters with how good each cluster is. With that in mind, no epsilon and minPoints 
+    configuration is "best" because what is best may vary depending on how many clusters you want.
+    
+    <insert tables about skew and entropy>
+    
+    <talk about manhattan vs euclidian?>
