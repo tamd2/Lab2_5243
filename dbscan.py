@@ -2,12 +2,12 @@
 #CSE 5243
 #Lab 2, clustering with K Means and DBScan
 
-from bs4 import BeautifulSoup
-from nltk import PorterStemmer
-from lxml import html
-import urllib2
+#from bs4 import BeautifulSoup
+#from nltk import PorterStemmer
+#from lxml import html
+#import urllib2
 import math
-import numpy
+#import numpy
 import pickle
 import sys
 
