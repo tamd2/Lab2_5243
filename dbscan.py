@@ -2,36 +2,63 @@
 #CSE 5243
 #Lab 2, clustering with K Means and DBScan
 
-#from bs4 import BeautifulSoup
-#from nltk import PorterStemmer
-#from lxml import html
-#import urllib2
 import math
-#import numpy
 import pickle
 import sys
 
 def ManhattanDistance(featureVector1, featureVector2):
-    manDist = 0
-    wordVector1 = featureVector1.keys()
-    wordVector2 = featureVector2.keys()
+    manDist = 0 #this is distance from vector1 to vector2
+    for word in featureVector1:
+        #look at each word in vector1
+        value_original = featureVector1[word] #value of the word from the feat    ure vector
+        value_neighbor = 0 #0, unless it is in the neighbor
+        if word in featureVector2:
+            value_neighbor = featureVector2[word]
+        manDist += abs(value_original - value_neighbor)
+
+    #loop again for words in vector 2 and not in vector 1
+    for word in featureVector2:
+        if not word in featureVector1:
+            manDist += abs(featureVector2[word])
+
+#    manDist = 0
+#    wordVector1 = featureVector1.keys()
+#    wordVector2 = featureVector2.keys()
 
 	#create list of all words across both vectors
-    unionList = list(set(wordVector1) | set(wordVector2))
+#    unionList = list(set(wordVector1) | set(wordVector2))
 
-    for word in unionList:
-        if (word in wordVector1):
-            if (word in wordVector2):
-                manDist += abs(featureVector1[word] - featureVector2[word])					
-            else:
-                manDist += abs(featureVector1[word])
-        else: #it has to be in wordVector2 if it wasn't in wordVector1, otherwise it isn't in unionList
-            if (word in wordVector1):
-                manDist += abs(featureVector1[word] - featureVector2[word])
-            else:
-                manDist += abs(featureVector2[word])
+#    for word in unionList:
+#        if (word in wordVector1):
+#            if (word in wordVector2):
+#                manDist += abs(featureVector1[word] - featureVector2[word])					
+#            else:
+#                manDist += abs(featureVector1[word])
+#        else: #it has to be in wordVector2 if it wasn't in wordVector1, otherwise it isn't in unionList
+#            if (word in wordVector1):
+#                manDist += abs(featureVector1[word] - featureVector2[word])
+#            else:
+#                manDist += abs(featureVector2[word])
 
     return manDist
+
+def get_euc_distance(vector1, vector2):
+    #each vector is a dictionary
+    distance_to_neighbor = 0 #this is distance from vector1 to vector2
+    for word in vector1:
+        #look at each word in vector1
+        value_original = vector1[word] #value of the word from the feat    ure vector
+        value_neighbor = 0 #0, unless it is in the neighbor
+        if word in vector2:
+            value_neighbor = vector2[word]
+        distance_to_neighbor += math.pow(value_original - value_neighbor , 2) #(x1-x2)^2
+
+    #loop again for words in vector 2 and not in vector 1
+    for word in vector2:
+        if not word in vector1:
+            distance_to_neighbor += math.pow(vector2[word],2)
+    distance_to_neighbor = math.sqrt(distance_to_neighbor)
+    return distance_to_neighbor
 
 #returns the overall entropy of this model
 def OverallEntropy(clusterLabels, featureVectors, numClusters):
@@ -146,13 +173,14 @@ document_word_lists = [[] for x in xrange(num_documents)] #creates a list of lis
 ######
 #Main
 ######
-if len(sys.argv) != 4:
-    print("please pass as parameters epsilon, minPoints, and the input file name")
+if len(sys.argv) != 5:
+    print("please pass as parameters epsilon, minPoints, the input file name, and 1 for manhattan distance or 2 for euclidian distance")
     quit()
 
 epsilon = int(sys.argv[1])
 minPoints = int(sys.argv[2])
 inputFileName = str(sys.argv[3])
+manOrEuc = int(sys.argv[4])
 featureVectors = read_in_preprocessed(inputFileName)
 
 print("creating proximity matrix")
@@ -167,7 +195,13 @@ for i in range(numOfFeatureVectors):
                     if (proximityMatrix[j][i] != -1):
                         proximityMatrix[i][j] = proximityMatrix[j][i]
                     else:
-			            proximityMatrix[i][j] = ManhattanDistance(featureVectors[i], featureVectors[j])
+                        if (manOrEuc == 1):
+			                proximityMatrix[i][j] = ManhattanDistance(featureVectors[i], featureVectors[j])
+                        elif (manOrEuc == 2):
+                            proximityMatrix[i][j] = get_euc_distance(featureVectors[i], featureVectors[j])
+                        else:
+                            print("invalid distance metric selected, please use 1 or 2. Quitting...")
+                            quit()
 
 print("Classifying point types for DBScan")
 
