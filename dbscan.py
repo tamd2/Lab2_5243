@@ -21,25 +21,6 @@ def ManhattanDistance(featureVector1, featureVector2):
         if not word in featureVector1:
             manDist += abs(featureVector2[word])
 
-#    manDist = 0
-#    wordVector1 = featureVector1.keys()
-#    wordVector2 = featureVector2.keys()
-
-	#create list of all words across both vectors
-#    unionList = list(set(wordVector1) | set(wordVector2))
-
-#    for word in unionList:
-#        if (word in wordVector1):
-#            if (word in wordVector2):
-#                manDist += abs(featureVector1[word] - featureVector2[word])					
-#            else:
-#                manDist += abs(featureVector1[word])
-#        else: #it has to be in wordVector2 if it wasn't in wordVector1, otherwise it isn't in unionList
-#            if (word in wordVector1):
-#                manDist += abs(featureVector1[word] - featureVector2[word])
-#            else:
-#                manDist += abs(featureVector2[word])
-
     return manDist
 
 def get_euc_distance(vector1, vector2):
@@ -106,6 +87,10 @@ def clusterEntropy(subFeatureVectorList, clusterIndex):
     return -entropy
 
 def calculateSkew(clusterLabels, numClusters):
+    if (numClusters == 1):
+        print("only one cluster, skew is 0")
+        return 0
+
     countList = dict()
     for clusterIndex in clusterLabels:
         clusterLabel = clusterLabels[clusterIndex]
@@ -129,6 +114,9 @@ def calculateSkew(clusterLabels, numClusters):
     variance = 1.0 * variance / numClusters
     stdev = pow(variance, .5)
 
+    if (stdev == 0):
+        return 0
+
     #calculate skew
     skew = 0
     for index in countList:
@@ -143,32 +131,6 @@ def read_in_preprocessed(fileName):
     count_feature_vector = pickle.load(dat_file_freq)
     dat_file_freq.close()
     return count_feature_vector
-
-#list of stop words
-#found here: http://xpo6.com/list-of-english-stop-words/
-stop_words = set(["a", "about", "above", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone", "along", "already", "also","although","always","am","among", "amongst", "amoungst", "amount",  "an", "and", "another", "any","anyhow","anyone","anything","anyway", "anywhere", "are", "around", "as",  "at", "back","be","became", "because","become","becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "beside", "besides", "between", "beyond", "bill", "both", "bottom","but", "by", "call", "can", "cannot", "cant", "co", "con", "could", "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", "during", "each", "eg", "eight", "either", "eleven","else", "elsewhere", "empty", "enough", "etc", "even", "ever", "every", "everyone", "everything", "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", "first", "five", "for", "former", "formerly", "forty", "found", "four", "from", "front", "full", "further", "get", "give", "go", "had", "has", "hasnt", "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "more", "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", "namely", "neither", "never", "nevertheless", "next", "nine", "no", "nobody", "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", "often", "on", "once", "one", "only", "onto", "or", "other", "others", "otherwise", "our", "ours", "ourselves", "out", "over", "own","part", "per", "perhaps", "please", "put", "rather", "re", "same", "see", "seem", "seemed", "seeming", "seems", "serious", "several", "she", "should", "show", "side", "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", "something", "sometime", "sometimes", "somewhere", "still", "such", "system", "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward", "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the", "reuter"])
-
-num_pages = 22
-num_documents = 21578 #found out by running code...better way to do this?
-
-#master word list, containing all words from all docs without duplicates 
-#stop words have been filtered out
-master_word_list = list()
-
-#words with a tf-idf score that is above the average tf-idf score (only relevant words)
-relevant_word_list = list()
-
-#word prescence feature vector
-presence_feature_vector= [dict() for x in xrange(num_documents)] #creates a list of dictionaries, one row for each document (not page)
-
-#word count feature vector
-count_feature_vector= [dict() for x in xrange(num_documents)] #creates a list of dictionaries, one row for each document (not page)
-
-#tf-idf feature vector
-tf_idf_feature_vector= [dict() for x in xrange(num_documents)] #creates a list of dictionaries, one row for each document (not page)
-
-#document list holder
-document_word_lists = [[] for x in xrange(num_documents)] #creates a list of lists, one for each document
 
 ######
 #Main
