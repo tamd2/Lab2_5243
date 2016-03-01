@@ -46,6 +46,71 @@ def read_in_preprocessed():
 	presence_feature_vector = pickle.load(dat_file_pres)
 	dat_file_pres.close()
 
+#cluster_list is the cluster with list values that are document numbers
+def clusterEntropy(cluster_list, clusterIndex, input_feature_vector):
+    #print("Cluster topic labels:")
+    #print(str(subFeatureVectorList))
+    #print("")
+
+    wordFrequency = dict()
+    numWords = 0
+    #generate word frequency dictionary
+    for doc in cluster_list:
+	fVector = input_feature_vector[doc] #get the feature vector of this document
+        for word in fVector:
+            if (word not in wordFrequency):
+                wordFrequency[word] = fVector[word]
+            else:
+                wordFrequency[word] += fVector[word]
+            numWords += fVector[word]
+
+    entropy = 0
+    for word in wordFrequency:
+        #mult by 1.0 to avoid integer division
+        freq = 1.0 * wordFrequency[word] / numWords
+        if (freq != 0):
+            entropy += freq * math.log(freq, 2)
+
+    return -entropy
+
+def calculateSkew(clusters, numClusters):
+    if (numClusters == 1):
+        print("only one cluster, skew is 0")
+        return 0
+
+    countList = dict()
+    for index in xrange(numClusters):
+        current_cluster = clusters[index]
+	if len(current_cluster) > 0:
+		countList[index] = len(current_cluster)
+
+    #calculate avg number of points per cluster
+    runningAvg = 0
+    numClusters = 0
+    for index in countList:
+        runningAvg += countList[index]
+        numClusters += 1
+    avgPointsPerCluster = 1.0 * runningAvg / numClusters
+
+    #calculate standard deviation
+    variance = 0
+    for index in countList:
+        variance += pow((countList[index] - avgPointsPerCluster),2)
+    variance = 1.0 * variance / numClusters
+    stdev = pow(variance, .5)
+
+    if (stdev == 0):
+        return 0
+
+    #calculate skew
+    skew = 0
+    for index in countList:
+        count = countList[index]
+        skew += pow((count - avgPointsPerCluster), 3)
+    skew = 1.0 * skew / ((numClusters-1) * pow(stdev, 3))
+
+    return skew
+
 #helper function for k-means
 def get_average_vector(list_of_documents, input_feature_vector):
 	avg_dict = dict()
@@ -86,6 +151,23 @@ def get_euc_distance(vector1, vector2):
 	distance_to_neighbor = math.sqrt(distance_to_neighbor)
 	return distance_to_neighbor
 
+def ManhattanDistance(featureVector1, featureVector2):
+    manDist = 0 #this is distance from vector1 to vector2
+    for word in featureVector1:
+        #look at each word in vector1
+        value_original = featureVector1[word] #value of the word from the feat    ure vector
+        value_neighbor = 0 #0, unless it is in the neighbor
+        if word in featureVector2:
+            value_neighbor = featureVector2[word]
+        manDist += abs(value_original - value_neighbor)
+
+    #loop again for words in vector 2 and not in vector 1
+    for word in featureVector2:
+        if not word in featureVector1:
+            manDist += abs(featureVector2[word])
+
+    return manDist
+
 
 def k_means(num_centroid, input_feature_vector, distance_function, num_iterations):
 	cluster_matrix = [list() for x in xrange(num_centroid)]
@@ -124,13 +206,13 @@ def k_means(num_centroid, input_feature_vector, distance_function, num_iteration
 		#reinitialize cluster list with only centroids
 		cluster_matrix[:] = []
 		cluster_matrix = [list() for x in range(0,num_centroid)]
-		for index in range(0,num_centroid):
-			cluster_matrix[index].append(centroid_documents[index])
+		#for index in range(0,num_centroid):
+			#cluster_matrix[index].append(centroid_documents[index])
 
 
 		#process each list and cluster based on distance to centroid
 		for index in range (0, num_documents):
-			if index not in centroid_documents:
+			#if index not in centroid_documents:
 				#no need to reprocess centroid
 				distances_to_centroids = [-1]*num_centroid #length num_centroid
 				for centroid in range(0,num_centroid):
@@ -159,8 +241,6 @@ def k_means(num_centroid, input_feature_vector, distance_function, num_iteration
 		#		cluster_matrix[index].append(centroid_documents[index])
 	
 		#goto REPEAT	
-	
-	#what if the cluster has nothing in it? need to consider this
 
 	#calc SSE
 	#do here because we have mean_vectors
@@ -169,11 +249,11 @@ def k_means(num_centroid, input_feature_vector, distance_function, num_iteration
 	for index in range(0,num_centroid):
 		#number of clusters
 		current_cluster = cluster_matrix[index]
-		#iterate over cluster and get distance to centroid (which is the index 0 of that cluster)
+		#iterate over cluster and get distance to centroid, the current cluster is index
 		for doc in current_cluster:
-			if doc != current_cluster[0]:
-				distance_to_mean = get_euc_distance(input_feature_vector[current_cluster[0]], input_feature_vector[doc])
-				print distance_to_mean
+			#if doc != current_cluster[0]:
+				distance_to_mean = get_euc_distance(mean_centroid_vectors[index], input_feature_vector[doc])
+				#print distance_to_mean
 				SSE += math.pow(distance_to_mean,2)
 
 	print("K-means clustering complete")
@@ -244,13 +324,13 @@ def get_euc_data_matrix(input_feature_vector):
 
 #main goes here	
 print("Reading in feature vectors from pre-processing...")
-dat_file_freq = open("freq_dat","r")
+dat_file_freq = open("datafiles/freq_dat_5000","r")
 count_feature_vector = pickle.load(dat_file_freq)
 dat_file_freq.close()
 
-dat_file_pres = open("pres_dat","r")
-presence_feature_vector = pickle.load(dat_file_pres)
-dat_file_pres.close()
+#dat_file_pres = open("datafiles/pres_dat","r")
+#presence_feature_vector = pickle.load(dat_file_pres)
+#dat_file_pres.close()
 print("Reading in complete")
 
 print("Euc matrix")
@@ -259,11 +339,23 @@ print("Euc matrix")
 print("Ready to run K-Means clustering")
 num_centroid = input("Enter desired K value:\n")
 num_iter = input("Enter desired iterations:\n")
-k_means_result = k_means(num_centroid, count_feature_vector, get_euc_distance, num_iter)
-print k_means_result
+#k_means_result = k_means(num_centroid, count_feature_vector, get_euc_distance, num_iter)
+k_means_result = k_means(num_centroid, count_feature_vector, ManhattanDistance, num_iter)
+#print k_means_result
 print ("Number of clusters: ")
-print len(k_means_result)
+clusters_num = sum(1 for non_empty in k_means_result if non_empty) #only non empty clusters count as clusters
+print (clusters_num)
 
+#entropy
+print ("Entropy: ")
+entropy = 0
+for index in range(0,len(k_means_result)):
+	if len(k_means_result[index]) > 0:
+		entropy += clusterEntropy(k_means_result[index], index, count_feature_vector)
+print (entropy)
+
+print ("Sew: ")
+print (calculateSkew(k_means_result, clusters_num))
 
 
 
