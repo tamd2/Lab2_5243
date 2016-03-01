@@ -41,7 +41,7 @@ Scalability:
     5,000 to 15,000) the runtime took about 9 times longer (1.5 minutes to ~13 minutes). This suggests that we have a polynomial scale
     for runtime of N^2. This scale is decent. It isn't great, but it isn't exponential which makes it managable.
         
-    <include pictures for documents vs time>
+    <include graph for files processed vs time>
 
         It is worth noting that the euclidian distance using DBScan runs typically took a bit longer than the manhattan distance runs.
     Our group believes this is becuase of the euclidian distance relying on the power function to square distances. This power 
@@ -66,7 +66,7 @@ lower skew means that the clusters are all similarly sized.
     additional consideration for picking the parameters. Because of these two balances to strike, there was no "best" configuration 
     of minPoints and epsilon. It would depend on if you want small clusters or big clusters, low skew or high skew, etc. 
     
-    <insert tables about skew and entropy>
+    <insert 6 graphs about DBScan Epsilon and minPoints vs skew, entropy and num of clusters>
     
         In general, manhattan and euclidian distance did not affect the results very much. They both followed the same trends such as
     where higher minPoints would lead to larger clusters (in conjunction with higher epsilon).
