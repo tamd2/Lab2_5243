@@ -29,3 +29,8 @@ and so on
   
 These input files are saved and read through the Pickle library of python, so do not try to use your own input files.
 
+The output of the cluster labels will look like the following:
+
+Cluster labels:
+{<index of article>: <index of cluster it belongs to>, ...}
+
