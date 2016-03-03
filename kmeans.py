@@ -199,8 +199,8 @@ def k_means(num_centroid, input_feature_vector, distance_function, num_iteration
 #that is the cluter that document belongs to
 
 	for iteration in xrange(num_iterations):
-		print("Iteration: ")
-		print iteration
+		#print("Iteration: ")
+		#print iteration
 		#REPEAT for X iterations/convergence
 
 		#reinitialize cluster list with only centroids
@@ -333,7 +333,7 @@ dat_file_freq.close()
 #dat_file_pres.close()
 print("Reading in complete")
 
-print("Euc matrix")
+#print("Euc matrix")
 #get_euc_data_matrix(count_feature_vector)
 #print get_euc_distance(count_feature_vector[1], count_feature_vector[1])
 print("Ready to run K-Means clustering")

@@ -7,7 +7,7 @@ implement Manhattan distance and Euclidian distance.
 
     Tim Taylor created the code for dbscan, and the code for calculating Manhattan distance, entropy, and skew.
     
-    Taumer Anabtawi created the code for K-Means and the code for calculating Euclidian distance. He also adapted his previous lab to 
+    Taumer Anabtawi created the code for K-Means, SSE and the code for calculating Euclidian distance. He also adapted his previous lab to 
         output its feature vectors in a manner that could easily be read by this lab.
 
     our projects run from input files that are generated from the previous lab. As such, the run time for our project does not depend
@@ -16,6 +16,7 @@ at all on the run time of the previous lab. You do not need to run the previous 
 
 Underlying assumptions:
     for K-Means:
+	1) The centroids are chosen by selecting K random documents' feature vectors to be the 		initial centroid vectors
 
     for dbscan:
         1) If a point is equal to epsilon in distance away, it is counted as a neighbor
