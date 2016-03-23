@@ -1,0 +1,49 @@
+Scalability of Naive Bayes:
+for training model:
+    jump from 500 vectors to 1000 vectors conferred a time to train that 
+took 4 times as long. This suggests a n^2 complexity (for n initial 
+vectors) for training. Jumping from 1000 up to 2000 took roughly 4 times 
+as long, so this also suggests a n^2 complexity. This is moderately 
+acceptable for scalability purposes.
+
+for classifying unknowns:
+    Jump from 500 vectors to 1000 vectors led to avg classify time to 
+scale by a factor of 3 (~5 to ~15) and the jump from 1000 to 2000 led to 
+a similar jump by a factor of about 3 (~15 to ~45). These two facts would
+point to the growth of the time to classify being a n^(3/2) complexity
+
+The complexity for training is higher than the complexity for classifying
+unknowns, so the overall program scales alongside the training complexity.
+
+An important factor that is obscured in this is how the number of unique 
+words in the feature vectors affect this run time.
+
+
+Accuracy of Naive Bayes:
+An important factor in this project was how sparse the data was in the
+topic label feature vectors. There were often more than 100 times the
+amount of 0's than 1's in the topic label feature vectors. With this in 
+mind, a model could achieve fairly high accuracy by simply predicting all 
+topic labels as 0. To work around that, I want to focus mostly on how well 
+the model led to true positives. That being said, I will still discuss 
+overall accuracy.
+
+Accuracy and its relation to amount of documents trained on
+
+
+
+
+Note: The documents and how they are ordered affects the results of this
+naive bayes classifier very much. As such, some runs were more successful
+than others possibly due in part to which documents it got to train on
+as opposed to how many documents it got to train on. 
+
+This effect is most notable in comparing the two runs of 90% trained, 500 
+and 600 documents trained on. The accuracy for 500 documents was 99% but 
+the accuracy for 600 documents was 71%. This significant drop is most 
+likely due to unfamiliar behaving documents being introduced around the 
+500th document mark. I feel confident saying this because running the 
+classifier with the same parameters but on 700 documents erased this 
+significant drop in accuracy, brining it back up to 99%. This hints that 
+the model wasn't being tested on documents that were very dissimilar from
+its training documents
