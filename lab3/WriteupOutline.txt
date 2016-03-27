@@ -39,7 +39,9 @@ The jump from 500 vectors to 1000 vectors conferred a jump in time to train
 that took 4 times as long. This suggests a n^2 complexity (for n initial
 vectors) for training. Jumping from 1000 documents up to 2000 took roughly 4 
 times as long, so this also suggests a n^2 complexity. This is moderately
-acceptable for scalability purposes.
+acceptable for scalability purposes. You can see this growth in the graph below
+
+    <graph for documents trained vs time to build model>
 
 
     Scalability of building KNN:
@@ -60,6 +62,10 @@ An important factor that is obscured in this is how the number of unique
 words in the feature vectors affect this run time. When introducing more
 documents, you likely add more unique words which in turn increases the
 size of the feature vectors that are processed.
+
+You can see the growth of time taken to classify unknowns in the graph below
+
+    <graph for documents trained vs avg time to classify an unknown>
 
 
     Scalability of Classifying unknowns with KNN:
@@ -83,33 +89,57 @@ the model led to true positives. That being said, I will still discuss
 overall accuracy.
 
     Accuracy:
-    As you can see by the graphs below, <accuracy findings here>
+    As you can see by the graphs below, accuracy does not change much regardless of what percent of documents you train on. 
 
+    <two graphs for accuracy>
+
+    However, this does not tell the full story of the data. In order to get a better picture, you have to look at the precision,
+    recall, and F-measure. This is important due to the class imbalance within the data due to very sparse topic label feature 
+    vectors.
 
     Precision:
+    As you can see by the graphs below, precision does seem more affected by the percent of documents trained on compared to
+    accuracy. For the case of 500 documents processed, precision increases when the percent of documents trained on increases.
+    This is a pretty intuitive result. However, the case for 1000 documents shows a much more sporadic picture. There doesn't
+    seem to be a trend in this graph, and that is likely due to the underlying documents being ordered in a way that makes
+    learning difficult. See the note below the F-Measure section for further discussion on this.
 
+    <two graphs for precision>
 
     Recall:
+    As you can see by the graphs below, recall behaves very similar to precision. In the 500 document case, it increases as the
+    percent of documents trained on increases. But again, the trend is lost in the 1000 document case.
 
+    <two graphs for recall>
 
-    F-Factor (name?):
+    F-Measure:
+    Finally, as you can see below, f-measure behaves similarly to both precision and recall. It tends to increase as percent
+    of documents trained on increases. The 1000 document case messes this up a bit though.
+    
+    <two graphs for f-measure>
 
-
-
-Note: The documents and how they are ordered affects the results of this
-naive bayes classifier very much. As such, some runs were more successful
-than others possibly due in part to which documents it got to train on
-as opposed to how many documents it got to train on.
+    Note: The documents and how they are ordered affects the results of this
+    naive bayes classifier very much. As such, some runs were more successful
+    than others possibly due in part to which documents it got to train on
+    as opposed to how many documents it got to train on.
  
-This effect is most notable in comparing the two runs of 90% trained, 500
-and 600 documents trained on. The accuracy for 500 documents was 99% but
-the accuracy for 600 documents was 71%. This significant drop is most
-likely due to unfamiliar behaving documents being introduced around the
-500th document mark. I feel confident saying this because running the
-classifier with the same parameters but on 700 documents erased this
-significant drop in accuracy, brining it back up to 99%. This hints that
-the model wasn't being tested on documents that were very dissimilar from
-its training documents
+    Listed below are three runs worth noting that shed light on this:
+
+<make a table out of the below>
+% Trained   Num of Docs           accuracy 
+90          500          ...      99.0 
+90          600          ...      71.2  
+90          700          ...      99.0  
+ 
+    This effect is most notable in comparing the two runs of 90% trained, 500
+    and 600 documents trained on. The accuracy for 500 documents was 99% but
+    the accuracy for 600 documents was 71%. This significant drop is most
+    likely due to unfamiliar behaving documents being introduced around the
+    500th document mark. I feel confident saying this because running the
+    classifier with the same parameters but on 700 documents erased this
+    significant drop in accuracy, brining it back up to 99%. This hints that
+    the model wasn't being tested on documents that were very dissimilar from
+    its training documents
 
 
 
