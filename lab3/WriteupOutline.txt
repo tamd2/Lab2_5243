@@ -1,0 +1,119 @@
+Tim Taylor and Taumer Anabtawi
+Cse 5243
+Lab 3
+Naive Bayes and K Nearest Neighbors algorithms
+
+How to run these algorithms:
+    Included in this submission are two README files; one for each of the 
+algorithms implemented. Please refer to these READMEs for instruction on how
+to run these.
+
+Who did what:
+    Tim created the naive bayes algorithm and all graphs shown in the report
+
+    Taumer created the KNN algorithm and 
+
+Assumptions made in this project:
+    Naive Bayes:
+        Each misclassification within a topic label feature vector contributes
+        to the number of true positives/false positives/etc. So if the topic
+        label feature vector has 5 words, a predicted classification may 
+        give up to 5 false positives, or 5 true positives, and so on.
+
+        All body text feature vectors are treated as presence vectors. So
+        one feature vector with some word "X" valued at 4 contributes
+        to the probability of "X" the same as a feature vector with "X" valued
+        at 1. This was done to simplify what the probability of a given word is
+        for computing priors.
+
+        If a classification is equally likely to be classified as 1 as it is 0,
+        It is classified at 0. This was because the feature vectors were very 
+        sparse so 0 should be the default case.
+
+    KNN: 
+
+
+Scalability of building model:
+    Scalability of building Naive Bayes:
+The jump from 500 vectors to 1000 vectors conferred a jump in time to train 
+that took 4 times as long. This suggests a n^2 complexity (for n initial
+vectors) for training. Jumping from 1000 documents up to 2000 took roughly 4 
+times as long, so this also suggests a n^2 complexity. This is moderately
+acceptable for scalability purposes.
+
+
+    Scalability of building KNN:
+
+
+Scalability of classifying unknowns:
+    Scalability of Classifying unknowns with Naive Bayes:
+The jump from 500 documents to 1000 documents led to avg classify time to
+jump by a factor of 3 (~5 to ~15) and the jump from 1000 to 2000 led to
+a similar jump by a factor of about 3 (~15 to ~45). These two facts would
+point to the growth of the time to classify being a n^(3/2) complexity
+
+The complexity for training is higher than the complexity for classifying
+unknowns, so the overall program scales alongside the training complexity
+rather than the testing complexity.
+ 
+An important factor that is obscured in this is how the number of unique
+words in the feature vectors affect this run time. When introducing more
+documents, you likely add more unique words which in turn increases the
+size of the feature vectors that are processed.
+
+
+    Scalability of Classifying unknowns with KNN:
+
+
+Effect of number of documents trained on:
+    Effect of number of documents trained on Naive Bayes:
+
+    Effect of number of documents trained on KNN:
+
+
+
+Accuracy of Classifiers:
+    Accuracy of Naive Bayes:
+An important factor in this project was how sparse the data was in the
+topic label feature vectors. There were often more than 100 times the
+amount of 0's than 1's in the topic label feature vectors. With this in
+mind, a model could achieve fairly high accuracy by simply predicting all
+topic labels as 0. To work around that, I want to focus mostly on how well
+the model led to true positives. That being said, I will still discuss
+overall accuracy.
+
+    Accuracy:
+    As you can see by the graphs below, <accuracy findings here>
+
+
+    Precision:
+
+
+    Recall:
+
+
+    F-Factor (name?):
+
+
+
+Note: The documents and how they are ordered affects the results of this
+naive bayes classifier very much. As such, some runs were more successful
+than others possibly due in part to which documents it got to train on
+as opposed to how many documents it got to train on.
+ 
+This effect is most notable in comparing the two runs of 90% trained, 500
+and 600 documents trained on. The accuracy for 500 documents was 99% but
+the accuracy for 600 documents was 71%. This significant drop is most
+likely due to unfamiliar behaving documents being introduced around the
+500th document mark. I feel confident saying this because running the
+classifier with the same parameters but on 700 documents erased this
+significant drop in accuracy, brining it back up to 99%. This hints that
+the model wasn't being tested on documents that were very dissimilar from
+its training documents
+
+
+
+    Accuracy of KNN:
+
+
+

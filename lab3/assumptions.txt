@@ -1,7 +1,0 @@
-treat all feature vectors as presence vectors. I'm not sure how to handle
-    when one feature is higher than another feature vectors same element's
-    value. Does the former contribute more to the probability of the 
-    element than the other? I think no for this project
-
-Assume that when the classification runs into a case where a topic word is equally likely to be 1 as it is to be 0, that
-it chooses to label it as 0
