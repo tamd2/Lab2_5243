@@ -1,0 +1,25 @@
+Taumer:
+
+this program is kind of slow, so start out by limiting your runs to a 
+few hundred documents. Check the readme for how to do that
+
+There were a few things I want you to make sure to get in the report:
+    discuss # of permutations vs time and vs MSE
+
+    discuss how the sparseness of the data may limit minwise hashing's
+        effectiveness as a faster solution. I suspect it does, but
+        if you disagree you can write what you think. My hunch
+        is that the sparseness makes these estimates much more
+        accurate, but makes the estimates take longer because they
+        have to spend a while searching for a 1 to appear, and that
+        may involve traversing most of the binary string. When you are
+        going through the binary string over and over, and each time
+        covers most of the string, it stops being faster than the
+        baseline which goes through just one full time.
+
+    after those two, I leave it up to you. Let me know if you need my
+    help on anything
+
+    -Tim
+
+    

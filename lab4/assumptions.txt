@@ -1,0 +1,5 @@
+assume you only need to calculate each baseline jaccard once. The similarity 
+matrix generated for the baseline is symmetrical, so only one half has
+the useful info, the rest is all 0's.
+
+no documents with no words? Can you confirm this, Taumer?
