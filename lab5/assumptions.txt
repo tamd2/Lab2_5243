@@ -1,0 +1,8 @@
+I never try to find rules where the consequent is more than one class
+label. The reason for that is because for this lab, you only ever
+apply the most confident rule to test data to give it a class label.
+A rule such as A => {B, C} will never be more confident than A => B
+so it makes no sense to look for the former rule.
+
+We may want to leave this out of the report because it may be seen as
+not doing the algorithm correctly?
