@@ -1,17 +1,15 @@
 how to run this program:
 
-$ python minwise.py <input file> <optional: max number of documents>
+$ python cba.py <input file> <min support percent> <min confidence percent> <percent of docs to train on> <optional: max number of documents>
 
-So for example, to run this program on an input file such as freq_dat_5000 found in the datafiles folder:
+So for example, to run this program on an input file such as 
+freq_dat_5000 found in the datafiles folder with min support of 50%,
+min confidence of 60%, and train on 90% of the documents:
 
-$ python minwise.py datafiles/freq_dat_5000
+$ python cba.py datafiles/freq_dat_5000 50 60 90
 
 This program may take a while, so you can limit the number of documents it analyzes by adding on that number to the end of the command:
 
-$ python minwise.py datafiles/freq_dat_5000 100
+$ python cba.py datafiles/freq_dat_5000 50 60 90 100
 
 The above limits it to the first 100 documents from the input file
-
-The output of this file is the time taken to compute the baseline jaccard,
-the time taken to build the estimates for each of the k permutations,
-and the mean squared errors of each of those estimates.
