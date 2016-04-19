@@ -1,6 +1,6 @@
 #Tim Taylor and Taumer Anabtawi
 #CSE 5243
-#Lab 3, Classification with Naive Bayes
+#Lab 5: Classification by Association Rules
 
 import math
 import pickle
