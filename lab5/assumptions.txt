@@ -6,3 +6,8 @@ so it makes no sense to look for the former rule.
 
 We may want to leave this out of the report because it may be seen as
 not doing the algorithm correctly?
+
+
+I did not force the topic words to have high support in order to be part of rules. 
+I think this was because not very many topic words had high enough support. We should discuss if
+this needs to be fixed or if we should admit to it.
