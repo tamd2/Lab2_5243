@@ -1,0 +1,51 @@
+Tim Taylor and Taumer Anabtawi
+CSE 5243
+Lab 5
+
+How to run this program:
+  Please refer to the README within the submitted folder for instructions on how to run this lab
+  
+No outside software was used for the cba portion of this lab. As such, all data transformations are just for prepping for our
+own algorithm. Some of that transformation includes splitting the data up into topic label feature vectors and body text feature vectors.
+We also generate a list of all body words to be used in finding high support words.
+
+Who did what:
+  Tim did all of the work pertaining to readying the data to do cba on. He also did all the work for finding high support words sets
+  to be used in CBA. He also did all the work pertaining to generating the confident rules based on the high support word set.
+  
+  <Taumer: did you want credit for part of the rule generation? I can't remember what we agreed on>
+  
+  Taumer did all the work pertaining to testing the performance of those rules on the test set of data.
+  
+Impact of runtime parameters:
+<I want a graph for each of these>
+  Impact of number of documents trained on:
+    on time to build model:
+    
+    on time to classify unknown instance:
+    
+    on accuracy of classifier:
+    
+  Impact of percent of documents trained on:
+    on time to build model:
+    
+    on time to classify unknown instance:
+    
+    on accuracy of classifier:
+    
+  Impact of changing minimum support values:
+    on time to build model:
+    
+    on time to classify unknown instance:
+    
+    on accuracy of classifier:
+    
+  Impact of changing minimum confidence values:
+    on time to build model:
+    
+    on time to classify unknown instance:
+    
+    on accuracy of classifier:
+    
+    
+Comparison with lab 3 results:
