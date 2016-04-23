@@ -66,3 +66,7 @@ Impact of runtime parameters:
       is most likely due to the underlying data, and not the model.
     
 Comparison with lab 3 results:
+  Overall, classification by association (~90% accuracte) tended to have better accuracy than KNN (~40% accurate), but worse 
+  accuracy than naive bayes (~99% accurate). Classification by association also tended to run significantly faster (for both 
+  online and offline) than naive bayes and KNN.
+
