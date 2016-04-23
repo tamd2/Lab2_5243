@@ -20,32 +20,49 @@ Who did what:
 Impact of runtime parameters:
 <I want a graph for each of these>
   Impact of number of documents trained on:
-    on time to build model:
+    on time to build model (offline cost):
     
-    on time to classify unknown instance:
+    on time to classify unknown instance (online cost):
     
     on accuracy of classifier:
     
   Impact of percent of documents trained on:
-    on time to build model:
+    on time to build model (offline cost):
     
-    on time to classify unknown instance:
+    on time to classify unknown instance (online cost):
     
     on accuracy of classifier:
     
   Impact of changing minimum support values:
-    on time to build model:
+    on time to build model (offline cost):    
+      As you can see by the graph below, raising the minimum support tended to lower the amount of time taken to build the model.
+      This matches the intuition that higher minimum support would limit time taken by forcing the algorithm to prune more branches at
+      an earlier stage when they fail to meet the minimum support threshold.
     
-    on time to classify unknown instance:
+    on time to classify unknown instance (online cost):
+      As you can see by the graph below, raising the minimum support tended to lower the amount of time taken to classify unknowns.
+      This matches the intuition that higher min supports lead to fewer rules to consider, which means fewer rules to consider for
+      each new object which cuts down on time.
     
     on accuracy of classifier:
+      As you can see by the graph below, raising the minimum support tended to yield a higher accuracy, albeit not by much. This 
+      matches the intuition that rules should only be based on cases that tended to exist often previously.
     
   Impact of changing minimum confidence values:
-    on time to build model:
+    on time to build model (offline cost):
+      As yiou can see by the graph below, the minimum confidence value had little effect on the offline cost. By varying the
+      minimum confidence from 5 to 25, the time taken to build the model varied only between 15.08 and 14.96 seconds which is
+      not a significant change. Any variance of the offline cost is likely due to the underlying data and not the model.
     
-    on time to classify unknown instance:
+    on time to classify unknown instance (online cost):
+      As you can see by the graph below, the minimum confidence had a negative correlation with the online cost. The higher the
+      minimum confidence, the shorter the time taken to build the model. This matches your intuition because the higher minimum
+      confidence dictates that fewer rules are generated which means a new object has to go consider fewer possible rules when 
+      being evaluated.
     
     on accuracy of classifier:
-    
+      Varying values of minimum confidence did not have a very profound effect on the accuracy of the classifier. As you can see
+      by the graph below, the accuracy stayed around 89% when varying minimum confidence from 5 to 25. Any variance within the graph
+      is most likely due to the underlying data, and not the model.
     
 Comparison with lab 3 results:
